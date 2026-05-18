@@ -58,16 +58,18 @@ export function Canvas3D({ isCompare = false }: Props) {
   return (
     <div className="relative h-full min-h-0 flex-1">
       <Canvas
-        shadows
+        shadows="soft"
         camera={{ position: productCameras[currentProduct] || [2.5, 1.8, 2.8], fov: 40 }}
-        gl={{ antialias: true, toneMapping: 3, preserveDrawingBuffer: true }}
+        gl={{ antialias: true, toneMapping: 4, toneMappingExposure: 1.1, preserveDrawingBuffer: true }}
         style={{ width: '100%', height: '100%' }}
       >
         <Suspense fallback={null}>
-          <Environment preset={envPresets[environment] || 'studio'} background blur={0.3} />
-          <ambientLight intensity={0.25} />
-          <directionalLight position={[5, 8, 5]} intensity={1.3} castShadow shadow-mapSize={performanceMode ? 1024 : 2048} shadow-bias={-0.0003} shadow-normalBias={0.02} />
-          <directionalLight position={[-3, 4, -2]} intensity={0.35} />
+          <Environment preset={envPresets[environment] || 'studio'} background blur={0.4} />
+          <ambientLight intensity={0.15} />
+          <hemisphereLight args={['#b1e1ff', '#1a1a1a', 0.3]} />
+          <directionalLight position={[8, 10, 4]} intensity={1.5} castShadow shadow-mapSize={performanceMode ? 1024 : 4096} shadow-bias={-0.0002} shadow-normalBias={0.015} shadow-radius={2} />
+          <directionalLight position={[-5, 3, -3]} intensity={0.5} />
+          <directionalLight position={[0, 2, -5]} intensity={0.25} color="#8899cc" />
           <color attach="background" args={[bgColor]} />
           <ProductRenderer isCompare={isCompare} />
           <PartTooltip />
@@ -76,8 +78,8 @@ export function Canvas3D({ isCompare = false }: Props) {
           <OrbitControls enableDamping dampingFactor={0.08} minDistance={1.2} maxDistance={7}
             minPolarAngle={0.2} maxPolarAngle={Math.PI / 2 + 0.2} autoRotate={autoRotate} autoRotateSpeed={0.8} />
           <EffectComposer>
-            <Bloom luminanceThreshold={0.8} luminanceSmoothing={0.9} intensity={0.3} />
-            <Vignette darkness={0.35} offset={0.3} />
+            <Bloom luminanceThreshold={0.85} luminanceSmoothing={0.95} intensity={0.15} mipmapBlur />
+            <Vignette darkness={0.25} offset={0.35} />
           </EffectComposer>
         </Suspense>
       </Canvas>
