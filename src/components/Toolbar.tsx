@@ -8,7 +8,7 @@ import { products } from '../data/products';
 
 const btnBase = 'relative group w-8 h-8 flex items-center justify-center rounded-xl border backdrop-blur-md transition-all duration-200 hover:scale-105';
 
-function Icon({ d, active }: { d: string; active?: boolean }) {
+function Icon({ d }: { d: string; active?: boolean }) {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d={d} />
@@ -67,7 +67,7 @@ export function Toolbar() {
   return (
     <div className="absolute top-4 left-4 flex items-center gap-1.5 z-10 flex-wrap">
       <Tip label="自动旋转 (Space)">
-        <button onClick={() => setAutoRotate(!autoRotate)} className={btn(autoRotate)}><Icon d="M12 2a10 10 0 1010 10" active={autoRotate} /></button>
+        <button onClick={() => setAutoRotate(!autoRotate)} className={btn(autoRotate)}><Icon d="M12 2a10 10 0 1010 10" /></button>
       </Tip>
       <Tip label="截图">
         <button onClick={handleScreenshot} className={btn(false)}><Icon d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2v9" /><circle cx="12" cy="13" r="3" fill="currentColor" /></button>
