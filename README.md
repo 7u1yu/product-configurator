@@ -2,7 +2,7 @@
 
 **在线 3D 产品配置器** — 面向工业设计师，用代码生成的参数化 3D 模型替代传统渲染。
 
-[在线体验](https://haoyan-chair-configurator.surge.sh)
+[在线体验](https://haoyan-3d.surge.sh)
 
 ## 功能
 
