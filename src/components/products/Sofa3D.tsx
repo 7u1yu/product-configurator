@@ -37,17 +37,18 @@ export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     {/* FRAME */}
     <group onClick={(e) => { e.stopPropagation(); selectPart('frame'); }} onPointerOver={makeHoverIn('框架')} onPointerOut={makeHoverOut()}>
       <RoundedBox args={[sw + 0.08, 0.08, sd + 0.06]} radius={0.02} position={[0, seatY - 0.08, 0]} castShadow><meshStandardMaterial {...m('frame')} {...sel('frame')} /></RoundedBox>
-      {/* Side panels */}
-      <mesh position={[sw / 2 + 0.02, seatY + (isHigh ? 0.1 : -0.05), 0]} castShadow><boxGeometry args={[0.05, seatY + backH + 0.05, sd + 0.02]} /><meshStandardMaterial {...m('frame')} {...sel('frame')} /></mesh>
-      <mesh position={[-sw / 2 - 0.02, seatY + (isHigh ? 0.1 : -0.05), 0]} castShadow><boxGeometry args={[0.05, seatY + backH + 0.05, sd + 0.02]} /><meshStandardMaterial {...m('frame')} {...sel('frame')} /></mesh>
+      {/* Side panels - bottom sits on frame top, top reaches back cushion top */}
+      <mesh position={[sw / 2 + 0.02, seatY + backH * 0.3, 0]} castShadow><boxGeometry args={[0.05, seatY + backH - 0.04, sd + 0.02]} /><meshStandardMaterial {...m('frame')} {...sel('frame')} /></mesh>
+      <mesh position={[-sw / 2 - 0.02, seatY + backH * 0.3, 0]} castShadow><boxGeometry args={[0.05, seatY + backH - 0.04, sd + 0.02]} /><meshStandardMaterial {...m('frame')} {...sel('frame')} /></mesh>
     </group>
 
     {/* LEGS */}
     {lv !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={makeHoverIn('腿')} onPointerOut={makeHoverOut()}>
       {[[sw / 2 - 0.08, sd / 2 - 0.05], [-sw / 2 + 0.08, sd / 2 - 0.05], [sw / 2 - 0.08, -sd / 2 + 0.05], [-sw / 2 + 0.08, -sd / 2 + 0.05]].map((pos, i) => {
         const [x, z] = pos as number[];
-        if (lv === 'block') return <mesh key={i} position={[x, 0.08, z]} castShadow receiveShadow><boxGeometry args={[0.06, 0.16, 0.06]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>;
-        return <mesh key={i} position={[x, 0.08, z]} castShadow receiveShadow><cylinderGeometry args={[0.02, 0.035, 0.16, 12]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>;
+        const legH = seatY - 0.04; // ground to frame bottom
+        if (lv === 'block') return <mesh key={i} position={[x, legH / 2, z]} castShadow receiveShadow><boxGeometry args={[0.06, legH, 0.06]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>;
+        return <mesh key={i} position={[x, legH / 2, z]} castShadow receiveShadow><cylinderGeometry args={[0.02, 0.035, legH, 12]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>;
       })}
     </group>)}
 

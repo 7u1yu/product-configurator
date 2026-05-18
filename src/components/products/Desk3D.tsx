@@ -25,7 +25,7 @@ export function Desk3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     {/* LEGS */}
     <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={makeHoverIn('腿')} onPointerOut={makeHoverOut()}>
       {legV === 'four-legs' && ([[0.55, 0.25], [-0.55, 0.25], [0.55, -0.25], [-0.55, -0.25]] as [number,number][]).map(([x, z], i) => (
-        <mesh key={i} position={[x, (topH - 0.05) / 2, z]} castShadow receiveShadow><cylinderGeometry args={[0.03, 0.035, topH - 0.05, 16]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>
+        <mesh key={i} position={[x, topH / 2, z]} castShadow receiveShadow><cylinderGeometry args={[0.03, 0.035, topH, 16]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>
       ))}
       {legV === 'pedestal' && (<>
         <mesh position={[0, 0.04, 0]} castShadow receiveShadow><cylinderGeometry args={[0.2, 0.25, 0.08, 32]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>

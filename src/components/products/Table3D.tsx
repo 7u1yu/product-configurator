@@ -89,16 +89,16 @@ export function Table3D({ parts, selectedPart, selectPart, exploded = false }: P
             {/* Cross stretchers */}
             {!exploded && (
               <>
-                <mesh position={[0, topH * 0.35, 0.3]} rotation={[0, 0, Math.PI / 2]} castShadow>
-                  <cylinderGeometry args={[0.018, 0.018, 1.05, 8]} />
+                <mesh position={[0, topH * 0.3, 0.3]} rotation={[0, 0, Math.PI / 2]} castShadow>
+                  <cylinderGeometry args={[0.015, 0.015, 1.1, 8]} />
                   <meshStandardMaterial {...legMat} />
                 </mesh>
-                <mesh position={[0.55, topH * 0.35, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-                  <cylinderGeometry args={[0.018, 0.018, 0.55, 8]} />
+                <mesh position={[0.55, topH * 0.3, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+                  <cylinderGeometry args={[0.015, 0.015, 0.6, 8]} />
                   <meshStandardMaterial {...legMat} />
                 </mesh>
-                <mesh position={[-0.55, topH * 0.35, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-                  <cylinderGeometry args={[0.018, 0.018, 0.55, 8]} />
+                <mesh position={[-0.55, topH * 0.3, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+                  <cylinderGeometry args={[0.015, 0.015, 0.6, 8]} />
                   <meshStandardMaterial {...legMat} />
                 </mesh>
               </>

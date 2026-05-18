@@ -98,12 +98,12 @@ export function Bed3D({ parts, selectedPart, selectPart, exploded = false }: Pro
           </group>
         )}
 
-        {/* Mattress */}
-        <RoundedBox args={[fW - 0.12, 0.18, fD - 0.12]} radius={0.06} position={[0, fY + fH + 0.08, 0]} castShadow>
+        {/* Mattress - sits directly on frame top */}
+        <RoundedBox args={[fW - 0.12, 0.18, fD - 0.12]} radius={0.06} position={[0, fY + fH / 2 + 0.09, 0]} castShadow>
           <meshStandardMaterial color="#FAFAFA" roughness={0.85} metalness={0} />
         </RoundedBox>
         {/* Mattress top stitching */}
-        <mesh position={[0, fY + fH + 0.18, 0]}>
+        <mesh position={[0, fY + fH / 2 + 0.18, 0]}>
           <boxGeometry args={[fW - 0.25, 0.005, fD - 0.25]} />
           <meshStandardMaterial color="#F0F0F0" roughness={1} />
         </mesh>
