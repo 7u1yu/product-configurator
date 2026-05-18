@@ -1,5 +1,6 @@
 import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 interface Props {
   parts: PartConfig[];
@@ -10,8 +11,8 @@ interface Props {
   showDimensions?: boolean;
 }
 
-const hoverIn = () => { document.body.style.cursor = 'pointer'; };
-const hoverOut = () => { document.body.style.cursor = 'auto'; };
+const hoverIn = (name: string) => makeHoverIn(name);
+const hoverOut = makeHoverOut();
 
 export function Table3D({ parts, selectedPart, selectPart, exploded = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -34,7 +35,7 @@ export function Table3D({ parts, selectedPart, selectPart, exploded = false }: P
   return (
     <group position={[0, -0.05, 0]}>
       {/* ====== TOP ====== */}
-      <group onClick={(e) => { e.stopPropagation(); selectPart('top'); }} onPointerOver={hoverIn} onPointerOut={hoverOut}>
+      <group onClick={(e) => { e.stopPropagation(); selectPart('top'); }} onPointerOver={hoverIn('桌面')} onPointerOut={hoverOut}>
         <group position={[0, topH + exp, 0]}>
           {/* Main surface */}
           {topV === 'round' && (
@@ -70,7 +71,7 @@ export function Table3D({ parts, selectedPart, selectPart, exploded = false }: P
       </group>
 
       {/* ====== LEGS ====== */}
-      <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={hoverIn} onPointerOut={hoverOut}>
+      <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={hoverIn('桌腿')} onPointerOut={hoverOut}>
         {legV === 'four-legs' && (
           <>
             {[[0.55 + exp, 0.3 + exp], [-0.55 - exp, 0.3 + exp], [0.55 + exp, -0.3 - exp], [-0.55 - exp, -0.3 - exp]].map(([x, z], i) => {

@@ -1,5 +1,6 @@
 import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 interface Props {
   parts: PartConfig[];
@@ -10,8 +11,8 @@ interface Props {
   showDimensions?: boolean;
 }
 
-const hoverIn = () => { document.body.style.cursor = 'pointer'; };
-const hoverOut = () => { document.body.style.cursor = 'auto'; };
+const hoverIn = (name: string) => makeHoverIn(name);
+const hoverOut = makeHoverOut();
 
 export function Lamp3D({ parts, selectedPart, selectPart, exploded = false, wireframe = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);

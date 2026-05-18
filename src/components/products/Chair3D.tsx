@@ -2,6 +2,7 @@ import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
 import { getWoodTexture, getBrushedMetalTexture, isWoodColor } from '../../utils/proceduralTextures';
 import { useEffect, useState, useRef } from 'react';
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 interface Props {
   parts: PartConfig[];
@@ -12,8 +13,8 @@ interface Props {
   showDimensions?: boolean;
 }
 
-const hoverIn = () => { document.body.style.cursor = 'pointer'; };
-const hoverOut = () => { document.body.style.cursor = 'auto'; };
+const hoverIn = (name: string) => makeHoverIn(name);
+const hoverOut = makeHoverOut();
 
 export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wireframe = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -54,7 +55,7 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
     <group position={[0, 0.05, 0]}>
       {/* ====== SEAT ====== */}
       <group onClick={(e) => { e.stopPropagation(); selectPart('seat'); }}
-        onPointerOver={hoverIn} onPointerOut={hoverOut}>
+        onPointerOver={hoverIn('座面')} onPointerOut={hoverOut}>
         {/* Main seat shell */}
         <RoundedBox args={[1.15, 0.06, 0.95]} radius={0.04} position={[0, 0.4, 0]} castShadow receiveShadow>
           <meshStandardMaterial {...seatMat} />
@@ -87,7 +88,7 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
 
       {/* ====== BACKREST ====== */}
       <group onClick={(e) => { e.stopPropagation(); selectPart('backrest'); }}
-        onPointerOver={hoverIn} onPointerOut={hoverOut}>
+        onPointerOver={hoverIn('靠背')} onPointerOut={hoverOut}>
         <group position={[0, backV === 'short-panel' ? 0.6 : 0.75, -0.42 - exp]} rotation={[-0.25, 0, 0]}>
           {backV !== 'slatted' ? (
             <>
@@ -127,7 +128,7 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
 
       {/* ====== LEGS ====== */}
       <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }}
-        onPointerOver={hoverIn} onPointerOut={hoverOut}>
+        onPointerOver={hoverIn('椅腿')} onPointerOut={hoverOut}>
         {(legV === 'metal-straight' || legV === 'wooden-tapered') && (
           <>
             {[[0.38 + exp, 0.3 + exp / 2], [-0.38 - exp, 0.3 + exp / 2],
@@ -171,7 +172,7 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
       {/* ====== ARMRESTS ====== */}
       {armV !== 'none' && (
         <group onClick={(e) => { e.stopPropagation(); selectPart('armrests'); }}
-          onPointerOver={hoverIn} onPointerOut={hoverOut}>
+          onPointerOver={hoverIn('扶手')} onPointerOut={hoverOut}>
           {[1, -1].map((side) => {
             const sx = side * (0.58 + exp);
             return (
