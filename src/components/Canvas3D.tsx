@@ -60,16 +60,14 @@ export function Canvas3D({ isCompare = false }: Props) {
       <Canvas
         shadows="soft"
         camera={{ position: productCameras[currentProduct] || [2.5, 1.8, 2.8], fov: 40 }}
-        gl={{ antialias: true, toneMapping: 4, toneMappingExposure: 1.1, preserveDrawingBuffer: true }}
+        gl={{ antialias: true, toneMapping: 4, toneMappingExposure: 1.1, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}
         style={{ width: '100%', height: '100%' }}
       >
         <Suspense fallback={null}>
           <Environment preset={envPresets[environment] || 'studio'} background blur={0.4} />
-          <ambientLight intensity={0.15} />
-          <hemisphereLight args={['#b1e1ff', '#1a1a1a', 0.3]} />
-          <directionalLight position={[8, 10, 4]} intensity={1.5} castShadow shadow-mapSize={performanceMode ? 1024 : 4096} shadow-bias={-0.0002} shadow-normalBias={0.015} shadow-radius={2} />
-          <directionalLight position={[-5, 3, -3]} intensity={0.5} />
-          <directionalLight position={[0, 2, -5]} intensity={0.25} color="#8899cc" />
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[8, 10, 4]} intensity={1.2} castShadow shadow-mapSize={performanceMode ? 512 : 2048} shadow-bias={-0.0003} shadow-normalBias={0.02} />
+          <directionalLight position={[-4, 3, -3]} intensity={0.4} />
           <color attach="background" args={[bgColor]} />
           <ProductRenderer isCompare={isCompare} />
           <PartTooltip />
