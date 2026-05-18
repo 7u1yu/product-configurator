@@ -1,0 +1,12 @@
+{
+  "name": "3D Product Configurator",
+  "short_name": "Configurator",
+  "description": "面向工业设计师的在线 3D 产品配置工具",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#3B82F6",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "64x64", "type": "image/svg+xml" }
+  ]
+}
