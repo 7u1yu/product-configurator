@@ -66,7 +66,7 @@ export function Shelf3D({ parts, selectedPart, selectPart, exploded = false }: P
                 </mesh>
                 {/* Shelf brackets */}
                 {Array.from({ length: layers }).map((_, i) => (
-                  <mesh key={i} position={[x, 0.15 + i * spacing - 0.06, 0]} castShadow>
+                  <mesh key={i} position={[x, 0.15 + i * spacing - 0.05, 0]} castShadow>
                     <boxGeometry args={[0.025, 0.06, 0.06]} />
                     <meshStandardMaterial {...supMat} roughness={0.3} metalness={0.85} />
                   </mesh>

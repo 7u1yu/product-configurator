@@ -22,6 +22,10 @@ export function Toolbar() {
   const compareMode = useProductStore((s) => s.compareMode);
   const setCompareMode = useProductStore((s) => s.setCompareMode);
   const randomize = useProductStore((s) => s.randomize);
+  const undo = useProductStore((s) => s.undo);
+  const redo = useProductStore((s) => s.redo);
+  const performanceMode = useProductStore((s) => s.performanceMode);
+  const setPerformanceMode = useProductStore((s) => s.setPerformanceMode);
   const addToast = useToastStore((s) => s.add);
   const theme = useThemeStore((s) => s.theme);
   const toggleTheme = useThemeStore((s) => s.toggle);
@@ -72,6 +76,19 @@ export function Toolbar() {
       </Tooltip>
       <Tooltip label="CMF 规格卡">
         <button onClick={handleCmf} className={btn(false)}>🏷</button>
+      </Tooltip>
+      <span className="w-px h-5 bg-surface-700/50 mx-1" />
+      <Tooltip label="重置视角 (R)">
+        <button onClick={() => window.dispatchEvent(new CustomEvent('camera-preset', { detail: [2.5, 1.8, 2.8] }))} className={btn(false)}>🎯</button>
+      </Tooltip>
+      <Tooltip label="撤销 (Ctrl+Z)">
+        <button onClick={undo} className={btn(false)}>↩</button>
+      </Tooltip>
+      <Tooltip label="重做 (Ctrl+Shift+Z)">
+        <button onClick={redo} className={btn(false)}>↪</button>
+      </Tooltip>
+      <Tooltip label={performanceMode ? '标准模式' : '性能模式'}>
+        <button onClick={() => setPerformanceMode(!performanceMode)} className={btn(performanceMode)}>🐢</button>
       </Tooltip>
       <span className="w-px h-5 bg-surface-700/50 mx-1" />
       <Tooltip label="爆炸视图 (E)">

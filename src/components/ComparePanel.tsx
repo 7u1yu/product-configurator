@@ -19,7 +19,7 @@ export function ComparePanel() {
       <div className="p-4 border-b border-surface-700/30">
         <h3 className="text-sm font-semibold text-white">对比模式 - B面</h3>
         <div className="flex gap-1.5 mt-3">
-          {(['chair', 'table', 'bed', 'lamp', 'shelf', 'cabinet'] as const).map((type) => (
+          {(['chair', 'table', 'bed', 'lamp', 'shelf', 'cabinet', 'sofa', 'desk', 'bench', 'coatrack'] as const).map((type) => (
             <button key={type} onClick={() => switchCompareProduct(type)}
               className={`flex-1 py-1.5 rounded-lg text-[10px] font-medium transition-all ${compareProduct === type ? 'bg-white/15 text-white border border-white/20' : 'bg-surface-800/40 text-surface-400 border border-surface-700/30'}`}>
               {products[type]?.nameZh || type}

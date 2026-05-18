@@ -5,6 +5,10 @@ import { Bed3D } from './products/Bed3D';
 import { Lamp3D } from './products/Lamp3D';
 import { Shelf3D } from './products/Shelf3D';
 import { Cabinet3D } from './products/Cabinet3D';
+import { Sofa3D } from './products/Sofa3D';
+import { Desk3D } from './products/Desk3D';
+import { Bench3D } from './products/Bench3D';
+import { CoatRack3D } from './products/CoatRack3D';
 
 interface Props {
   isCompare?: boolean;
@@ -37,5 +41,9 @@ export function ProductRenderer({ isCompare = false }: Props) {
     case 'lamp': return <Lamp3D {...props} />;
     case 'shelf': return <Shelf3D {...props} />;
     case 'cabinet': return <Cabinet3D {...props} />;
+    case 'sofa': return <Sofa3D {...props} />;
+    case 'desk': return <Desk3D {...props} />;
+    case 'bench': return <Bench3D {...props} />;
+    case 'coatrack': return <CoatRack3D {...props} />;
   }
 }

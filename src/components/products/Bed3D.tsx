@@ -37,7 +37,7 @@ export function Bed3D({ parts, selectedPart, selectPart, exploded = false }: Pro
       {/* ====== HEADBOARD ====== */}
       {hbV !== 'none' && (
         <group onClick={(e) => { e.stopPropagation(); selectPart('headboard'); }} onPointerOver={hoverIn} onPointerOut={hoverOut}>
-          <group position={[0, fY + fH + (hbV === 'tall' ? 0.4 : 0.15) + exp * 0.5, -fD / 2 + 0.03 - exp]}>
+          <group position={[0, fY + fH + (hbV === 'tall' ? 0.39 : 0.14) + exp * 0.5, -fD / 2 + 0.03 - exp]}>
             {/* Main panel */}
             <RoundedBox args={[fW - 0.06, hbV === 'tall' ? 0.78 : 0.28, 0.06]} radius={0.025} castShadow receiveShadow>
               <meshStandardMaterial {...hbMat} />

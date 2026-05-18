@@ -107,15 +107,15 @@ export function Table3D({ parts, selectedPart, selectPart, exploded = false }: P
 
         {legV === 'pedestal' && (
           <>
-            <mesh position={[0, 0.08, 0]} castShadow receiveShadow>
+            <mesh position={[0, 0.05, 0]} castShadow receiveShadow>
               <cylinderGeometry args={[0.22, 0.28, 0.1, 32]} />
               <meshStandardMaterial {...legMat} />
             </mesh>
-            <mesh position={[0, topH / 2 - topT / 4 + 0.06, 0]} castShadow receiveShadow>
-              <cylinderGeometry args={[0.08, 0.12, topH - topT - 0.16, 24]} />
+            <mesh position={[0, 0.46, 0]} castShadow receiveShadow>
+              <cylinderGeometry args={[0.08, 0.1, 0.72, 24]} />
               <meshStandardMaterial {...legMat} />
             </mesh>
-            <mesh position={[0, topH - topT / 2 - 0.02, 0]}>
+            <mesh position={[0, topH - topT / 2, 0]}>
               <cylinderGeometry args={[0.1, 0.08, 0.04, 24]} />
               <meshStandardMaterial {...legMat} roughness={0.25} metalness={0.85} />
             </mesh>
@@ -131,8 +131,8 @@ export function Table3D({ parts, selectedPart, selectPart, exploded = false }: P
               const legH = topH - topT;
               return (
               <group key={g}>
-                {[0.16, -0.16].map((angle, i) => (
-                  <mesh key={i} position={[x, legH / 2, 0]} rotation={[0, 0, angle]} castShadow>
+                {[0.14, -0.14].map((zOff, i) => (
+                  <mesh key={i} position={[x, legH / 2, zOff]} rotation={[0.15 * (i === 0 ? 1 : -1), 0, 0]} castShadow>
                     <boxGeometry args={[0.05, legH, 0.05]} />
                     <meshStandardMaterial {...legMat} />
                   </mesh>

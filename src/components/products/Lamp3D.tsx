@@ -31,7 +31,7 @@ export function Lamp3D({ parts, selectedPart, selectPart, exploded = false, wire
   const bodyMat = { ...m('body'), ...sel('body') };
   const baseMat = { ...m('base'), ...sel('base') };
 
-  const shadeY = 0.72 + exp;
+  const shadeY = 0.48 + exp;
   const isCurved = bodyV === 'curved';
 
   return (

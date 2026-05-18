@@ -87,9 +87,9 @@ export function Cabinet3D({ parts, selectedPart, selectPart, exploded = false, w
       {!isOpen && (
         <group onClick={(e) => { e.stopPropagation(); selectPart('doors'); }} onPointerOver={hoverIn} onPointerOut={hoverOut}>
           {isDrawer ? (
-            [0.65, 0.3, -0.02].map((y, i) => (
+            [0.465, 0.275, 0.085].map((y, i) => (
               <group key={i} position={[0 + (exploded ? exp * (i - 1) : 0), y + bodyY, bd / 2 + 0.018]}>
-                <RoundedBox args={[bw - 0.04, 0.2, 0.025]} radius={0.006} castShadow>
+                <RoundedBox args={[bw - 0.04, 0.17, 0.025]} radius={0.006} castShadow>
                   <meshStandardMaterial {...doorMat} />
                 </RoundedBox>
                 {/* Handle */}

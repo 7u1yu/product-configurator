@@ -7,6 +7,15 @@ import { materialPresets } from '../data/materials';
 import { saveConfigToStorage, type SavedConfig } from '../utils/storage';
 
 const defaultProduct: ProductType = 'chair';
+const undoStack: PartConfig[][] = [];
+const redoStack: PartConfig[][] = [];
+const MAX_HISTORY = 50;
+
+function pushUndo(parts: PartConfig[]) {
+  undoStack.push(parts.map((p) => ({ ...p })));
+  if (undoStack.length > MAX_HISTORY) undoStack.shift();
+  redoStack.length = 0;
+}
 
 interface ProductState {
   currentProduct: ProductType;
@@ -38,10 +47,16 @@ interface ProductState {
   setComparePartMaterial: (partId: string, material: MaterialType) => void;
   setComparePartVariant: (partId: string, variant: string) => void;
   switchCompareProduct: (type: ProductType) => void;
+  performanceMode: boolean;
+  setPerformanceMode: (on: boolean) => void;
+  bgColor: string;
+  setBgColor: (color: string) => void;
   randomize: () => void;
   applyPreset: (presetId: string) => void;
   saveConfig: (name: string) => void;
   loadConfig: (data: SavedConfig) => void;
+  undo: () => void;
+  redo: () => void;
   resetAll: () => void;
 }
 
@@ -62,23 +77,19 @@ export const useProductStore = create<ProductState>((set) => ({
   compareProduct: defaultProduct,
   compareParts: getDefaults(defaultProduct),
   compareSelectedPart: products[defaultProduct].parts[0]?.id || '',
+  performanceMode: false,
+  bgColor: '#1a1a1a',
 
   selectPart: (id) => set({ selectedPart: id }),
 
   setPartColor: (partId, color) =>
-    set((state) => ({
-      parts: state.parts.map((p) => (p.id === partId ? { ...p, color } : p)),
-    })),
+    set((state) => { pushUndo(state.parts); return { parts: state.parts.map((p) => (p.id === partId ? { ...p, color } : p)) }; }),
 
   setPartMaterial: (partId, material) =>
-    set((state) => ({
-      parts: state.parts.map((p) => (p.id === partId ? { ...p, material } : p)),
-    })),
+    set((state) => { pushUndo(state.parts); return { parts: state.parts.map((p) => (p.id === partId ? { ...p, material } : p)) }; }),
 
   setPartVariant: (partId, variant) =>
-    set((state) => ({
-      parts: state.parts.map((p) => (p.id === partId ? { ...p, variant } : p)),
-    })),
+    set((state) => { pushUndo(state.parts); return { parts: state.parts.map((p) => (p.id === partId ? { ...p, variant } : p)) }; }),
 
   switchProduct: (type) => {
     const newParts = getDefaults(type);
@@ -95,6 +106,19 @@ export const useProductStore = create<ProductState>((set) => ({
   setExploded: (on) => set({ exploded: on }),
   setWireframe: (on) => set({ wireframe: on }),
   setShowDimensions: (on) => set({ showDimensions: on }),
+  setPerformanceMode: (on) => set({ performanceMode: on }),
+  setBgColor: (color) => set({ bgColor: color }),
+
+  undo: () => set((state) => {
+    if (undoStack.length === 0) return {};
+    redoStack.push(state.parts.map((p) => ({ ...p })));
+    return { parts: undoStack.pop()! };
+  }),
+  redo: () => set((state) => {
+    if (redoStack.length === 0) return {};
+    undoStack.push(state.parts.map((p) => ({ ...p })));
+    return { parts: redoStack.pop()! };
+  }),
 
   setCompareMode: (on) => {
     if (on) {

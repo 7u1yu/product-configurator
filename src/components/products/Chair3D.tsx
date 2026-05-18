@@ -138,12 +138,18 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
                 </mesh>
               </group>
             ))}
-            {/* Cross stretchers for front legs */}
+            {/* Cross stretchers: front legs (z=0.3) and rear legs (z=-0.32) */}
             {!exploded && (
-              <mesh position={[0, -0.2, 0.3]} rotation={[0, 0, Math.PI / 2]} castShadow>
-                <cylinderGeometry args={[0.02, 0.02, 0.72, 8]} />
-                <meshStandardMaterial {...legMat} />
-              </mesh>
+              <>
+                <mesh position={[0, -0.2, 0.3]} rotation={[0, 0, Math.PI / 2]} castShadow>
+                  <cylinderGeometry args={[0.02, 0.02, 0.72, 8]} />
+                  <meshStandardMaterial {...legMat} />
+                </mesh>
+                <mesh position={[0, -0.22, -0.32]} rotation={[0, 0, Math.PI / 2]} castShadow>
+                  <cylinderGeometry args={[0.02, 0.02, 0.66, 8]} />
+                  <meshStandardMaterial {...legMat} />
+                </mesh>
+              </>
             )}
           </>
         )}
@@ -209,10 +215,10 @@ function SledBaseDetailed({ mat, exp }: { mat: Record<string, unknown>; exp: num
             <cylinderGeometry args={[0.025, 0.025, 0.06, 8]} />
             <meshStandardMaterial {...mat} />
           </mesh>
-          {/* Vertical supports */}
-          {[0.45 + exp / 2, -0.05 - exp / 2].map((z, j) => (
-            <mesh key={j} position={[x, -0.05, z]} castShadow receiveShadow>
-              <cylinderGeometry args={[0.025, 0.025, 0.6, 12]} />
+          {/* Vertical supports: seat bottom(~0.34) to runner top(-0.355) */}
+          {[0.62 - exp / 2, -0.22 - exp / 2].map((z, j) => (
+            <mesh key={j} position={[x, -0.01, z]} castShadow receiveShadow>
+              <cylinderGeometry args={[0.022, 0.022, 0.62, 12]} />
               <meshStandardMaterial {...mat} />
             </mesh>
           ))}

@@ -25,6 +25,10 @@ const productCameras: Record<string, [number, number, number]> = {
   lamp: [1.8, 1.5, 2.2],
   shelf: [2.5, 2.0, 3.0],
   cabinet: [2.2, 1.5, 2.5],
+  sofa: [3.5, 1.8, 3.5],
+  desk: [2.8, 2.0, 3.0],
+  bench: [3.0, 1.5, 2.5],
+  coatrack: [1.8, 2.0, 2.5],
 };
 
 interface Props { isCompare?: boolean; }
@@ -33,6 +37,8 @@ export function Canvas3D({ isCompare = false }: Props) {
   const environment = useProductStore((s) => s.environment);
   const autoRotate = useProductStore((s) => s.autoRotate);
   const currentProduct = useProductStore((s) => s.currentProduct);
+  const bgColor = useProductStore((s) => s.bgColor);
+  const performanceMode = useProductStore((s) => s.performanceMode);
   const [webglOk] = useState(hasWebGL);
 
   if (!webglOk) {
@@ -60,8 +66,9 @@ export function Canvas3D({ isCompare = false }: Props) {
         <Suspense fallback={null}>
           <Environment preset={envPresets[environment] || 'studio'} background blur={0.3} />
           <ambientLight intensity={0.25} />
-          <directionalLight position={[5, 8, 5]} intensity={1.3} castShadow shadow-mapSize={2048} shadow-bias={-0.0003} shadow-normalBias={0.02} />
+          <directionalLight position={[5, 8, 5]} intensity={1.3} castShadow shadow-mapSize={performanceMode ? 1024 : 2048} shadow-bias={-0.0003} shadow-normalBias={0.02} />
           <directionalLight position={[-3, 4, -2]} intensity={0.35} />
+          <color attach="background" args={[bgColor]} />
           <ProductRenderer isCompare={isCompare} />
           <ContactShadows position={[0, -0.75, 0]} opacity={0.45} scale={5} blur={2.5} far={1.5} />
           <CameraController />
@@ -136,6 +143,7 @@ function CameraController() {
         case '4': window.dispatchEvent(new CustomEvent('camera-preset', { detail: views[3].pos })); break;
         case 'arrowleft': selectPart(parts[(parts.findIndex(p => p.id === useProductStore.getState().selectedPart) - 1 + parts.length) % parts.length]?.id); break;
         case 'arrowright': selectPart(parts[(parts.findIndex(p => p.id === useProductStore.getState().selectedPart) + 1) % parts.length]?.id); break;
+        case 'z': if (e.metaKey || e.ctrlKey) { e.preventDefault(); if (e.shiftKey) useProductStore.getState().redo(); else useProductStore.getState().undo(); } break;
       }
     };
     window.addEventListener('keydown', onKey);

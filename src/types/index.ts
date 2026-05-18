@@ -1,4 +1,4 @@
-export type ProductType = 'chair' | 'table' | 'bed' | 'lamp' | 'shelf' | 'cabinet';
+export type ProductType = 'chair' | 'table' | 'bed' | 'lamp' | 'shelf' | 'cabinet' | 'sofa' | 'desk' | 'bench' | 'coatrack';
 
 export type MaterialType = 'matte' | 'satin' | 'glossy' | 'metal';
 

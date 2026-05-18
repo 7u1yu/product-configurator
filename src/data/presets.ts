@@ -110,4 +110,16 @@ export const presets: Preset[] = [
       { id: 'base', color: '#E74C3C', material: 'glossy', variant: 'square' },
     ],
   },
+  // Sofa presets
+  { id: 'sofa-nordic', name: 'Nordic', nameZh: '北欧风', productType: 'sofa', parts: [{ id: 'cushions', color: '#F5F0E8', material: 'satin', variant: 'three-seat' },{ id: 'frame', color: '#D4A76A', material: 'satin', variant: 'low' },{ id: 'legs', color: '#D4A76A', material: 'satin', variant: 'tapered' },{ id: 'armrests', color: '#F5F0E8', material: 'satin', variant: 'standard' }] },
+  { id: 'sofa-modern', name: 'Modern', nameZh: '现代风', productType: 'sofa', parts: [{ id: 'cushions', color: '#3D3D3D', material: 'satin', variant: 'two-seat' },{ id: 'frame', color: '#3D3D3D', material: 'metal', variant: 'high' },{ id: 'legs', color: '#3D3D3D', material: 'metal', variant: 'block' },{ id: 'armrests', color: '#3D3D3D', material: 'metal', variant: 'wide' }] },
+  // Desk presets
+  { id: 'desk-nordic', name: 'Nordic', nameZh: '北欧风', productType: 'desk', parts: [{ id: 'top', color: '#F5E6D3', material: 'satin', variant: 'rectangle' },{ id: 'legs', color: '#D4A76A', material: 'satin', variant: 'four-legs' },{ id: 'storage', color: '#F5E6D3', material: 'satin', variant: 'right' }] },
+  { id: 'desk-industrial', name: 'Industrial', nameZh: '工业风', productType: 'desk', parts: [{ id: 'top', color: '#D4A76A', material: 'satin', variant: 'l-shape' },{ id: 'legs', color: '#3D3D3D', material: 'metal', variant: 'sawhorse' },{ id: 'storage', color: '#3D3D3D', material: 'metal', variant: 'left' }] },
+  // Bench presets
+  { id: 'bench-nordic', name: 'Nordic', nameZh: '北欧风', productType: 'bench', parts: [{ id: 'seat', color: '#D4A76A', material: 'satin', variant: 'curved' },{ id: 'legs', color: '#D4A76A', material: 'satin', variant: 'a-frame' },{ id: 'backrest', color: '#D4A76A', material: 'satin', variant: 'low' }] },
+  { id: 'bench-minimal', name: 'Minimal', nameZh: '极简风', productType: 'bench', parts: [{ id: 'seat', color: '#3D3D3D', material: 'matte', variant: 'flat' },{ id: 'legs', color: '#3D3D3D', material: 'metal', variant: 'straight' },{ id: 'backrest', color: '#3D3D3D', material: 'matte', variant: 'none' }] },
+  // Coat rack presets
+  { id: 'coatrack-nordic', name: 'Nordic', nameZh: '北欧风', productType: 'coatrack', parts: [{ id: 'pole', color: '#D4A76A', material: 'satin', variant: 'straight' },{ id: 'hooks', color: '#D4A76A', material: 'satin', variant: 'six' },{ id: 'base', color: '#D4A76A', material: 'satin', variant: 'round' }] },
+  { id: 'coatrack-industrial', name: 'Industrial', nameZh: '工业风', productType: 'coatrack', parts: [{ id: 'pole', color: '#3D3D3D', material: 'metal', variant: 'segmented' },{ id: 'hooks', color: '#3D3D3D', material: 'metal', variant: 'spiral' },{ id: 'base', color: '#3D3D3D', material: 'metal', variant: 'tripod' }] },
 ];

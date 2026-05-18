@@ -10,7 +10,7 @@ import { useProductStore } from '../store/useProductStore';
 import { products } from '../data/products';
 import type { ProductType } from '../types';
 
-const productTypes: ProductType[] = ['chair', 'table', 'bed', 'lamp', 'shelf', 'cabinet'];
+const productTypes: ProductType[] = ['chair', 'table', 'bed', 'lamp', 'shelf', 'cabinet', 'sofa', 'desk', 'bench', 'coatrack'];
 
 const descriptions: Record<string, string> = {
   chair: '经典休闲椅，可自由搭配座面、椅腿、靠背与扶手造型',
@@ -19,15 +19,23 @@ const descriptions: Record<string, string> = {
   lamp: '氛围台灯，锥形/圆顶/方形灯罩搭配不同灯身底座',
   shelf: '模块化置物架，层数可变，金属/木质/悬浮支架',
   cabinet: '收纳柜，双门/单门/抽屉结构，平板或玻璃面板',
+  sofa: '组合沙发，双人/三人/L型可选，自由搭配框架与扶手',
+  desk: '书桌，支持L型/紧凑型桌面，可选抽屉收纳方向',
+  bench: '长凳，平板/曲面/横条座面，可选低靠背或全高靠背',
+  coatrack: '衣帽架，直杆/弯顶/分段杆体，三钩/六钩/螺旋挂钩',
 };
 
 const designNotes: Record<string, string> = {
-  chair: '椅子是工业设计中最经典的产品类型。本配置器中的休闲椅从 Scandinavian 设计语言出发，座面采用圆角处理减少视觉重量，椅腿提供金属直腿、木质锥腿和滑雪板底座三种结构方案，靠背可选高面板、低面板或横条风格。',
-  table: '桌子的核心设计挑战在于桌面与底座的视觉平衡。圆形桌面搭配柱式底座呈现雕塑感，长方形桌面配合四腿结构强调功能主义，支架式底座则带有中古风格。桌面边缘的圆角处理让整体更亲和。',
-  bed: '床的设计重点在于床头板的比例与床架的呼吸感。高床头板营造稳重氛围，低板或无边设计则更现代。排骨架保留空气流通，平台式简洁利落，面板式带有传统木工细节。',
-  lamp: '台灯是 CMF 表现力最强的产品类型。灯罩形态决定光的氛围——锥形集中、圆顶柔散、方形现代。灯身材质与底座造型的搭配可以彻底改变一盏灯的风格，从工业风的弯管到极简柱体。',
-  shelf: '置物架是功能与结构美学的直接对话。层数决定收纳容量，支架系统定义视觉性格——纤细金属架轻盈通透，实木侧板温暖稳重，悬浮式隐藏支架则最大化极简效果。',
-  cabinet: '储物柜的 UX 在于「藏」与「露」的平衡。双门结构适合大容量收纳，抽屉式便于分类存取。柜门材质从实木平板到玻璃框再到开放式，决定了柜体与空间的关系。',
+  chair: '椅子是工业设计中最经典的产品类型。本配置器的休闲椅融入 Scandinavian 设计语言，座面圆角减少视觉重量，椅腿三方案满足不同结构表达。',
+  table: '桌面与底座的比例平衡是桌子设计的核心。圆形搭配柱式呈雕塑感，方形配四腿强调功能主义，支架式带中古风格。',
+  bed: '床头板比例与床架呼吸感决定卧室氛围。高板稳重、低板现代、无板极简；排骨架透氣、平台式利落、面板式带木工细节。',
+  lamp: '台灯是 CMF 表现力最强的产品。灯罩形态决定光的氛围——锥形集中、圆顶柔散、方形现代。灯身与底座的材质搭配彻底改变风格。',
+  shelf: '置物架是功能与结构美学的对话。层数决定收纳量，支架系统定义性格——金属架轻盈，木侧板温暖，悬浮支架极简。',
+  cabinet: '储物柜的 UX 在「藏」与「露」的平衡。双门大容量、抽屉分类便；门板从实木到玻璃框到开放，决定与空间的关系。',
+  sofa: '沙发的尺度与比例是客厅的视觉锚点。双人/三人/L型覆盖不同空间需求，框架高度与扶手宽度直接影响舒适感与风格表达。',
+  desk: '书桌的核心在于工作面积与收纳效率的平衡。L型扩展操作空间，紧凑型适合小房间。抽屉位置影响使用习惯——右抽屉适合右利手场景。',
+  bench: '长凳是最纯粹的坐具形态。从平板到曲面到横条，座面的变化定义了不同的使用感受。靠背的加入让它从「坐」升级为「倚」。',
+  coatrack: '衣帽架是雕塑感最强的家居单品。杆体从极简直杆到有机弯顶到工业分段，挂钩从功能三角到全周环绕到螺旋生长，底座从稳定圆盘到轻巧十字。',
 };
 
 interface Props {
@@ -166,6 +174,7 @@ export function ConfigPanel({ onOpenSaved }: Props) {
           </h3>
           <EnvironmentPresets />
         </div>
+        <BackgroundColorPicker />
       </div>
 
       {/* Actions */}
@@ -192,5 +201,23 @@ export function ConfigPanel({ onOpenSaved }: Props) {
         </button>
       </div>
     </motion.div>
+  );
+}
+
+function BackgroundColorPicker() {
+  const bgColor = useProductStore((s) => s.bgColor);
+  const setBgColor = useProductStore((s) => s.setBgColor);
+  const colors = ['#1a1a1a', '#2a2a2a', '#3a3a3a', '#F5F5F0', '#E8E0D5', '#D5E0E8', '#1a2a3a', '#2a1a2a'];
+  return (
+    <div>
+      <h3 className="text-xs font-semibold text-surface-400 uppercase tracking-wider mb-2">背景色</h3>
+      <div className="flex gap-1.5 flex-wrap">
+        {colors.map((c) => (
+          <button key={c} onClick={() => setBgColor(c)}
+            className={`w-6 h-6 rounded-full border-2 transition-all ${bgColor === c ? 'border-white scale-110' : 'border-transparent hover:scale-105'}`}
+            style={{ backgroundColor: c }} />
+        ))}
+      </div>
+    </div>
   );
 }
