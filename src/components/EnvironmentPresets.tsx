@@ -15,7 +15,7 @@ export function EnvironmentPresets() {
           onClick={() => setEnvironment(env.id)}
           className={`flex-1 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
             currentEnv === env.id
-              ? 'bg-white/15 text-white border border-white/20 shadow-lg'
+              ? 'bg-surface-50/15 text-surface-50 border border-surface-50/20 shadow-lg'
               : 'bg-surface-800/40 text-surface-400 border border-surface-700/30 hover:border-surface-600/50 hover:text-surface-200'
           }`}
         >

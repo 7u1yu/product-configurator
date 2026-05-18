@@ -38,6 +38,12 @@ const designNotes: Record<string, string> = {
   coatrack: '衣帽架是雕塑感最强的家居单品。杆体从极简直杆到有机弯顶到工业分段，挂钩从功能三角到全周环绕到螺旋生长，底座从稳定圆盘到轻巧十字。',
 };
 
+const productIcons: Record<string, string> = {
+  chair: '🪑', table: '🪵', bed: '🛏️', lamp: '💡',
+  shelf: '📚', cabinet: '🗄️', sofa: '🛋️', desk: '💻',
+  bench: '🪑', coatrack: '🧥',
+};
+
 interface Props {
   onOpenSaved?: () => void;
 }
@@ -62,7 +68,7 @@ export function ConfigPanel({ onOpenSaved }: Props) {
     >
       {/* Header */}
       <div className="p-5 border-b border-surface-700/30">
-        <h2 className="text-lg font-display font-semibold text-white tracking-tight">
+        <h2 className="text-lg font-display font-semibold text-surface-50 tracking-tight">
           {products[currentProduct].nameZh}
         </h2>
         <p className="text-xs text-surface-400 mt-0.5">
@@ -70,7 +76,7 @@ export function ConfigPanel({ onOpenSaved }: Props) {
         </p>
         <button
           onClick={() => setShowNotes(!showNotes)}
-          className="mt-2 text-[10px] text-surface-500 hover:text-surface-300 transition-colors"
+          className="mt-2 text-[11px] text-surface-500 hover:text-surface-300 transition-colors"
         >
           {showNotes ? '收起设计说明 ▲' : '设计说明 ▼'}
         </button>
@@ -90,19 +96,27 @@ export function ConfigPanel({ onOpenSaved }: Props) {
 
       {/* Product Switcher */}
       <div className="p-4 border-b border-surface-700/30">
-        <div className="flex gap-1.5">
+        <div className="grid grid-cols-2 gap-2">
           {productTypes.map((type) => (
             <motion.button
               key={type}
               whileTap={{ scale: 0.95 }}
               onClick={() => switchProduct(type)}
-              className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all duration-200 ${
+              className={`relative flex flex-col items-center gap-1 py-2.5 px-2 rounded-xl text-xs font-medium transition-all duration-200 ${
                 currentProduct === type
-                  ? 'bg-white/15 text-white border border-white/20 shadow-lg'
+                  ? 'bg-surface-50/10 text-surface-50 border border-surface-50/15 shadow-sm'
                   : 'bg-surface-800/40 text-surface-400 border border-surface-700/30 hover:border-surface-600/50 hover:text-surface-200'
               }`}
             >
-              {products[type].nameZh}
+              <span className="text-base">{productIcons[type]}</span>
+              <span>{products[type].nameZh}</span>
+              {currentProduct === type && (
+                <motion.div
+                  layoutId="activeProduct"
+                  className="absolute bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-blue-400"
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                />
+              )}
             </motion.button>
           ))}
         </div>
@@ -182,20 +196,20 @@ export function ConfigPanel({ onOpenSaved }: Props) {
         <div className="flex gap-2">
           <button
             onClick={randomize}
-            className="flex-1 py-2 px-3 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-white hover:bg-surface-800 transition-all duration-200"
+            className="flex-1 py-2 px-3 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-surface-50 hover:bg-surface-800 transition-all duration-200"
           >
             🎲 随机灵感
           </button>
           <button
             onClick={() => onOpenSaved?.()}
-            className="flex-1 py-2 px-3 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-white hover:bg-surface-800 transition-all duration-200"
+            className="flex-1 py-2 px-3 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-surface-50 hover:bg-surface-800 transition-all duration-200"
           >
             💾 保存/加载
           </button>
         </div>
         <button
           onClick={resetAll}
-          className="w-full py-2.5 px-4 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-white hover:bg-surface-800 transition-all duration-200"
+          className="w-full py-2.5 px-4 text-sm text-surface-400 bg-surface-800/50 border border-surface-700/40 rounded-xl hover:text-surface-50 hover:bg-surface-800 transition-all duration-200"
         >
           重置为默认
         </button>

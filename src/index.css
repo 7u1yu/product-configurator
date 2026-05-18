@@ -15,8 +15,8 @@
     width: 100%;
     height: 100%;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #0A0A0A;
-    color: #E5E5E5;
+    background: rgb(var(--surface-950));
+    color: rgb(var(--surface-50));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -43,124 +43,59 @@
   }
 }
 
+/* ===== Theme CSS Variables ===== */
+/* Dark theme (default) */
+:root {
+  --surface-50: 250 250 250;
+  --surface-100: 245 245 245;
+  --surface-200: 229 229 229;
+  --surface-300: 212 212 212;
+  --surface-400: 163 163 163;
+  --surface-500: 115 115 115;
+  --surface-600: 82 82 82;
+  --surface-700: 64 64 64;
+  --surface-800: 38 38 38;
+  --surface-900: 23 23 23;
+  --surface-950: 10 10 10;
+  --shadow-color: 0 0 0;
+}
+
 /* Light theme */
 html.light {
-  --bg: #FAFAFA;
-  --text: #171717;
-  --text-secondary: #737373;
-  --surface: #FFFFFF;
-  --surface-hover: #F5F5F5;
-  --border: #E5E5E5;
+  --surface-50: 10 10 10;
+  --surface-100: 23 23 23;
+  --surface-200: 38 38 38;
+  --surface-300: 64 64 64;
+  --surface-400: 115 115 115;
+  --surface-500: 140 140 140;
+  --surface-600: 180 180 180;
+  --surface-700: 212 212 212;
+  --surface-800: 240 240 240;
+  --surface-900: 250 250 250;
+  --surface-950: 255 255 255;
+  --shadow-color: 0 0 0;
 }
 
-html.light body,
-html.light #root {
-  background: #FAFAFA;
-  color: #171717;
-}
+/* Overlay backgrounds — always black, but lighter in light theme */
+html.light .bg-black\/60 { background: rgba(0, 0, 0, 0.2); }
+html.light .bg-black\/70 { background: rgba(0, 0, 0, 0.3); }
 
-html.light .bg-surface-950 {
-  background: #FAFAFA;
-}
-
-html.light .bg-surface-900\/60,
-html.light .bg-surface-900\/90,
-html.light .bg-surface-900\/80 {
-  background: rgba(255, 255, 255, 0.8);
-}
-
-html.light .bg-surface-800\/40,
-html.light .bg-surface-800\/50 {
-  background: rgba(245, 245, 245, 0.8);
-}
-
-html.light .border-surface-700\/50,
-html.light .border-surface-700\/40,
-html.light .border-surface-700\/30 {
-  border-color: rgba(200, 200, 200, 0.5);
-}
-
-html.light .text-white {
-  color: #171717;
-}
-
-html.light .text-surface-400 {
-  color: #737373;
-}
-
-html.light .text-surface-200 {
-  color: #525252;
-}
-
-html.light .text-surface-500 {
-  color: #A3A3A3;
-}
-
-html.light .bg-white\/10 {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-html.light .bg-white\/15 {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-html.light .border-white\/20 {
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-html.light .backdrop-blur-xl {
-  backdrop-filter: blur(16px);
-}
-
-html.light .hover\:bg-surface-800:hover {
-  background: #F0F0F0;
-}
-
-html.light .bg-surface-800\/60 {
-  background: rgba(240, 240, 240, 0.8);
-}
-
-html.light .border-surface-700\/40 {
-  border-color: rgba(200, 200, 200, 0.4);
-}
-
-html.light .border-surface-600\/50 {
-  border-color: rgba(160, 160, 160, 0.5);
-}
-
-html.light a {
-  color: inherit;
-}
-
-html.light .bg-black\/70 {
-  background: rgba(0, 0, 0, 0.3);
-}
-
-html.light .bg-black\/60 {
-  background: rgba(0, 0, 0, 0.2);
-}
-
+/* In light theme, shadows should be subtler */
 html.light .shadow-2xl {
-  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 40px rgba(var(--shadow-color), 0.06);
 }
-
 html.light .shadow-lg {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 12px rgba(var(--shadow-color), 0.04);
 }
-
 html.light input {
-  color: #171717;
-  background: #FAFAFA;
+  color: rgb(var(--surface-50));
+  background: rgb(var(--surface-950));
 }
 
-html.light .from-blue-400 {
-  --tw-gradient-from: #3B82F6;
-}
-
-html.light .to-purple-400 {
-  --tw-gradient-to: #A855F7;
-}
-
+/* Gradient text colors are fixed and decorative */
 html.light .text-blue-400 {
   color: #3B82F6;
 }
+/* Scrollbar in light theme */
+html.light ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); }
+html.light ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.2); }

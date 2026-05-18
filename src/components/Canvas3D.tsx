@@ -46,7 +46,7 @@ export function Canvas3D({ isCompare = false }: Props) {
       <div className="flex items-center justify-center h-full min-h-0 flex-1 bg-surface-950">
         <div className="text-center p-8">
           <p className="text-4xl mb-4">⚠️</p>
-          <h3 className="text-white font-semibold mb-2">WebGL 不可用</h3>
+          <h3 className="text-surface-50 font-semibold mb-2">WebGL 不可用</h3>
           <p className="text-surface-400 text-sm max-w-md">
             您的浏览器或设备不支持 WebGL。请使用最新版 Chrome、Edge 或 Safari 打开。
           </p>
@@ -89,7 +89,7 @@ export function Canvas3D({ isCompare = false }: Props) {
             {views.map((v, i) => (
               <button key={v.label}
                 onClick={() => window.dispatchEvent(new CustomEvent('camera-preset', { detail: v.pos }))}
-                className="px-2.5 py-1 text-[11px] rounded-lg bg-surface-900/60 border border-surface-700/40 text-surface-400 hover:text-white hover:border-surface-600/50 backdrop-blur-md transition-all"
+                className="px-2.5 py-1 text-[11px] rounded-lg bg-surface-900/60 border border-surface-700/40 text-surface-400 hover:text-surface-50 hover:border-surface-600/50 backdrop-blur-md transition-all"
                 title={`快捷键: ${i + 1}`}>
                 {v.label}
               </button>
@@ -166,7 +166,7 @@ function PartTooltip() {
   if (!info) return null;
   return (
     <Html position={[info.x, info.y + 0.15, info.z]} center style={{ pointerEvents: 'none' }}>
-      <div className="bg-surface-900/90 text-white text-[11px] px-2.5 py-1 rounded-lg border border-surface-700/50 whitespace-nowrap backdrop-blur-md">
+      <div className="bg-surface-900/90 text-surface-50 text-[11px] px-2.5 py-1 rounded-lg border border-surface-700/50 whitespace-nowrap backdrop-blur-md">
         {info.name}
       </div>
     </Html>

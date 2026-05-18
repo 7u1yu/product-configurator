@@ -24,7 +24,7 @@ export function PartSelector() {
             onClick={() => selectPart(p.id)}
             className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
               selectedPart === p.id
-                ? 'bg-white/15 text-white border border-white/20 shadow-lg'
+                ? 'bg-surface-50/15 text-surface-50 border border-surface-50/20 shadow-lg'
                 : 'bg-surface-800/40 text-surface-400 border border-surface-700/30 hover:border-surface-600/50 hover:text-surface-200'
             }`}
           >

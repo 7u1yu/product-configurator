@@ -2,12 +2,18 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const features = [
-  { icon: '🪑', title: '10 种产品', desc: '椅子·桌子·床·台灯·置物架·储物柜·沙发·书桌·长凳·衣帽架' },
-  { icon: '🎨', title: '自由配置', desc: '16 色 × 4 材质 × 每部件 2-3 种几何造型' },
-  { icon: '💥', title: '专业工具', desc: '爆炸视图·线框模式·CMF规格卡·对比模式·Undo/Redo' },
-  { icon: '🔗', title: '一键分享', desc: '配置编码到链接，复制即分享·在线体验' },
-  { icon: '🎯', title: '产品化体验', desc: '暗色/亮色主题·快捷键·悬停提示·性能模式' },
-  { icon: '📱', title: '响应式', desc: '桌面侧边栏 / 移动端底部面板·10 产品无缝切换' },
+  { icon: '🎯', color: 'from-blue-500/20 to-blue-600/10', title: '10 种产品', desc: '椅子·桌子·床·台灯·置物架·储物柜·沙发·书桌·长凳·衣帽架' },
+  { icon: '🎨', color: 'from-purple-500/20 to-purple-600/10', title: '自由配置', desc: '16 色 × 4 材质 × 每部件 2-3 种几何造型' },
+  { icon: '⚡', color: 'from-amber-500/20 to-amber-600/10', title: '专业工具', desc: '爆炸视图·线框模式·CMF规格卡·对比模式·Undo/Redo' },
+  { icon: '🔗', color: 'from-emerald-500/20 to-emerald-600/10', title: '一键分享', desc: '配置编码到链接，复制即分享·在线体验' },
+  { icon: '🖥️', color: 'from-cyan-500/20 to-cyan-600/10', title: '产品化体验', desc: '暗色/亮色主题·快捷键·悬停提示·性能模式' },
+  { icon: '📱', color: 'from-rose-500/20 to-rose-600/10', title: '响应式', desc: '桌面侧边栏 / 移动端底部面板·10 产品无缝切换' },
+];
+
+const scenes = [
+  { icon: '🏠', title: '家居展厅', desc: '在工作室灯光下预览产品，切换暗色/亮色环境，感受真实材质质感' },
+  { icon: '🏢', title: '设计评审', desc: '导出 CMF 规格卡和截图，快速分享设计方案给团队和客户' },
+  { icon: '🛒', title: '电商展示', desc: '通过分享链接让客户在浏览器中自由切换颜色材质，所见即所得' },
 ];
 
 const techStack = ['React', 'TypeScript', 'Three.js', 'R3F', 'Drei', 'Postprocessing', 'Zustand', 'Framer Motion', 'Tailwind CSS', 'Vite'];
@@ -19,7 +25,7 @@ export function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-surface-950 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-surface-950 text-surface-50 overflow-x-hidden">
       {/* Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <div className="absolute inset-0 pointer-events-none">
@@ -47,20 +53,48 @@ export function LandingPage() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               onClick={() => navigate('/config')}
-              className="relative px-10 py-4 bg-white text-black font-semibold rounded-2xl text-base shadow-xl shadow-white/10 hover:shadow-white/20 transition-shadow group"
+              className="relative px-10 py-4 bg-surface-50 text-surface-950 font-semibold rounded-2xl text-base shadow-xl shadow-surface-50/10 hover:shadow-surface-50/20 transition-shadow group"
             >
               <span className="relative z-10 flex items-center gap-2">
                 开始配置
                 <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>→</motion.span>
               </span>
               <motion.div animate={{ opacity: [0.4, 0.8, 0.4] }} transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute inset-0 rounded-2xl bg-white/20 blur-md" />
+                className="absolute inset-0 rounded-2xl bg-surface-50/20 blur-md" />
             </motion.button>
             <a href="https://github.com/7u1yu/product-configurator" target="_blank" rel="noopener"
-              className="px-10 py-4 border border-surface-600/40 text-surface-300 font-medium rounded-2xl text-base hover:border-surface-400 hover:text-white hover:bg-white/5 transition-all">
+              className="px-10 py-4 border border-surface-600/40 text-surface-300 font-medium rounded-2xl text-base hover:border-surface-400 hover:text-surface-50 hover:bg-surface-50/5 transition-all">
               GitHub →
             </a>
           </div>
+
+          {/* Product Preview Gallery */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.7 }}
+            className="mt-20 grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-2xl mx-auto"
+          >
+            {[
+              { icon: '🪑', name: '椅子', gradient: 'from-blue-500/10 to-blue-600/5' },
+              { icon: '🛋️', name: '沙发', gradient: 'from-purple-500/10 to-purple-600/5' },
+              { icon: '💡', name: '台灯', gradient: 'from-amber-500/10 to-amber-600/5' },
+              { icon: '🪵', name: '桌子', gradient: 'from-emerald-500/10 to-emerald-600/5' },
+              { icon: '🗄️', name: '柜子', gradient: 'from-rose-500/10 to-rose-600/5' },
+            ].map((p, i) => (
+              <motion.div
+                key={p.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + i * 0.1 }}
+                whileHover={{ y: -4, scale: 1.03 }}
+                className={`group relative flex flex-col items-center gap-2 p-4 rounded-2xl bg-gradient-to-b ${p.gradient} border border-surface-700/20 hover:border-surface-600/40 cursor-default transition-all duration-300`}
+              >
+                <span className="text-3xl transition-transform duration-300 group-hover:scale-110">{p.icon}</span>
+                <span className="text-xs text-surface-400 group-hover:text-surface-200 transition-colors">{p.name}</span>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
@@ -86,13 +120,47 @@ export function LandingPage() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {features.map((f) => (
             <motion.div key={f.title} variants={item}
-              className="group p-6 rounded-2xl bg-surface-900/40 border border-surface-700/20 hover:border-surface-600/50 hover:bg-surface-900/60 transition-all cursor-default">
-              <span className="text-3xl mb-4 block group-hover:scale-110 transition-transform duration-300">{f.icon}</span>
-              <h3 className="font-semibold text-white mb-1.5">{f.title}</h3>
-              <p className="text-sm text-surface-400 leading-relaxed">{f.desc}</p>
+              className="group relative p-6 rounded-2xl bg-surface-900/40 border border-surface-700/20 hover:border-surface-600/50 hover:bg-surface-900/60 transition-all cursor-default overflow-hidden">
+              <div className={`absolute inset-0 bg-gradient-to-br ${f.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+              <div className="relative z-10">
+                <div className={`w-10 h-10 mb-4 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center text-xl`}>
+                  {f.icon}
+                </div>
+                <h3 className="font-semibold text-surface-50 mb-1.5">{f.title}</h3>
+                <p className="text-sm text-surface-400 leading-relaxed">{f.desc}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Scenes */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-24 text-center mb-16"
+        >
+          <span className="text-sm text-emerald-400 font-medium tracking-wide uppercase">Use Cases</span>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mt-3 mb-4">使用场景</h2>
+          <p className="text-surface-400 text-lg">从展厅到电商，适配多种工作流程</p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {scenes.map((s, i) => (
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-6 rounded-2xl bg-surface-900/30 border border-surface-700/15 text-center"
+            >
+              <span className="text-4xl mb-4 block">{s.icon}</span>
+              <h3 className="font-semibold text-surface-50 mb-2">{s.title}</h3>
+              <p className="text-sm text-surface-400 leading-relaxed">{s.desc}</p>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* Footer */}

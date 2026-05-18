@@ -10,6 +10,7 @@ interface Props {
 
 export function SavedConfigsModal({ open, onClose }: Props) {
   const [configs, setConfigs] = useState<SavedConfig[]>([]);
+  const [saved, setSaved] = useState(false);
   const loadConfig = useProductStore((s) => s.loadConfig);
   const saveConfig = useProductStore((s) => s.saveConfig);
   const [name, setName] = useState('');
@@ -22,7 +23,9 @@ export function SavedConfigsModal({ open, onClose }: Props) {
     if (!name.trim()) return;
     saveConfig?.(name.trim());
     setName('');
+    setSaved(true);
     setConfigs(getSavedConfigs());
+    setTimeout(() => setSaved(false), 1500);
   };
 
   const handleDelete = (id: string) => {
@@ -47,7 +50,7 @@ export function SavedConfigsModal({ open, onClose }: Props) {
             onClick={(e) => e.stopPropagation()}
             className="bg-surface-900 border border-surface-700/50 rounded-2xl p-6 w-[380px] max-h-[70vh] flex flex-col"
           >
-            <h3 className="text-base font-semibold text-white mb-4">已保存配置</h3>
+            <h3 className="text-base font-semibold text-surface-50 mb-4">已保存配置</h3>
 
             {/* Save new */}
             <div className="flex gap-2 mb-4">
@@ -56,15 +59,20 @@ export function SavedConfigsModal({ open, onClose }: Props) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="输入配置名称..."
-                className="flex-1 px-3 py-2 bg-surface-800 border border-surface-700/40 rounded-lg text-sm text-white placeholder-surface-500 outline-none focus:border-surface-500"
+                className="flex-1 px-3 py-2 bg-surface-800 border border-surface-700/40 rounded-lg text-sm text-surface-50 placeholder-surface-500 outline-none focus:border-surface-500"
                 onKeyDown={(e) => e.key === 'Enter' && handleSave()}
               />
-              <button
+              <motion.button
                 onClick={handleSave}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-sm text-white hover:bg-white/20 transition-colors"
+                whileTap={{ scale: 0.95 }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  saved
+                    ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300'
+                    : 'bg-surface-50/10 border-surface-50/20 text-surface-50 hover:bg-surface-50/20'
+                } border`}
               >
-                保存
-              </button>
+                {saved ? '✓ 已保存' : '保存'}
+              </motion.button>
             </div>
 
             {/* Saved list */}
@@ -78,14 +86,14 @@ export function SavedConfigsModal({ open, onClose }: Props) {
                   className="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-800/40 border border-surface-700/30"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white truncate">{c.name}</p>
-                    <p className="text-[10px] text-surface-500">
+                    <p className="text-sm text-surface-50 truncate">{c.name}</p>
+                    <p className="text-[11px] text-surface-500">
                       {c.productType} · {new Date(c.timestamp).toLocaleDateString()}
                     </p>
                   </div>
                   <button
                     onClick={() => { loadConfig?.(c); onClose(); }}
-                    className="px-3 py-1 text-xs rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+                    className="px-3 py-1 text-xs rounded-lg bg-surface-50/10 text-surface-50 hover:bg-surface-50/20 transition-colors"
                   >
                     加载
                   </button>
@@ -101,7 +109,7 @@ export function SavedConfigsModal({ open, onClose }: Props) {
 
             <button
               onClick={onClose}
-              className="mt-4 w-full py-2 rounded-lg text-sm text-surface-400 hover:text-white transition-colors"
+              className="mt-4 w-full py-2 rounded-lg text-sm text-surface-400 hover:text-surface-50 transition-colors"
             >
               关闭
             </button>

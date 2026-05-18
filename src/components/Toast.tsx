@@ -25,7 +25,7 @@ export function ToastContainer() {
               onClick={() => remove(t.id)}
               className={`pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl border backdrop-blur-2xl shadow-2xl cursor-pointer ${c.bg} ${c.border} ${c.text}`}
             >
-              <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold">{c.icon}</span>
+              <span className="w-5 h-5 rounded-full bg-surface-50/10 flex items-center justify-center text-[10px] font-bold">{c.icon}</span>
               <span className="text-sm">{t.message}</span>
             </motion.div>
           );

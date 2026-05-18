@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useProductStore } from '../store/useProductStore';
 import { useToastStore } from '../store/toastStore';
 import { useThemeStore } from '../store/themeStore';
@@ -37,7 +37,7 @@ export function Toolbar() {
   const toggleTheme = useThemeStore((s) => s.toggle);
 
   const btn = (active: boolean) =>
-    `${btnBase} ${active ? 'bg-white/15 border-white/30 text-white shadow-lg' : 'bg-surface-900/50 border-surface-700/30 text-surface-400 hover:text-white hover:border-surface-600/50'}`;
+    `${btnBase} ${active ? 'bg-surface-50/15 border-surface-50/30 text-surface-50 shadow-lg' : 'bg-surface-900/50 border-surface-700/30 text-surface-400 hover:text-surface-50 hover:border-surface-600/50'}`;
 
   const handleScreenshot = useCallback(() => {
     const canvas = document.querySelector('canvas');
@@ -113,10 +113,11 @@ export function Toolbar() {
 }
 
 function Tip({ label, children }: { label: string; children: React.ReactNode }) {
+  const child = React.Children.only(children);
   return (
     <div className="relative group">
-      {children}
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-[10px] rounded-md bg-surface-800 text-surface-200 border border-surface-700/50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+      {React.cloneElement(child as React.ReactElement<{ 'aria-label'?: string }>, { 'aria-label': label })}
+      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-[11px] rounded-md bg-surface-800 text-surface-200 border border-surface-700/50 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
         {label}
       </div>
     </div>

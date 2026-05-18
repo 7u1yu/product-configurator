@@ -17,11 +17,11 @@ export function ComparePanel() {
   return (
     <div className="h-full bg-surface-900/60 backdrop-blur-xl border-l border-surface-700/40 flex flex-col overflow-y-auto">
       <div className="p-4 border-b border-surface-700/30">
-        <h3 className="text-sm font-semibold text-white">对比模式 - B面</h3>
+        <h3 className="text-sm font-semibold text-surface-50">对比模式 - B面</h3>
         <div className="flex gap-1.5 mt-3">
           {(['chair', 'table', 'bed', 'lamp', 'shelf', 'cabinet', 'sofa', 'desk', 'bench', 'coatrack'] as const).map((type) => (
             <button key={type} onClick={() => switchCompareProduct(type)}
-              className={`flex-1 py-1.5 rounded-lg text-[10px] font-medium transition-all ${compareProduct === type ? 'bg-white/15 text-white border border-white/20' : 'bg-surface-800/40 text-surface-400 border border-surface-700/30'}`}>
+              className={`flex-1 py-1.5 rounded-lg text-[10px] font-medium transition-all ${compareProduct === type ? 'bg-surface-50/15 text-surface-50 border border-surface-50/20' : 'bg-surface-800/40 text-surface-400 border border-surface-700/30'}`}>
               {products[type]?.nameZh || type}
             </button>
           ))}
@@ -32,7 +32,7 @@ export function ComparePanel() {
           <div className="grid grid-cols-2 gap-1.5">
             {compareParts.map((p) => (
               <button key={p.id} onClick={() => selectComparePart(p.id)}
-                className={`px-2 py-1.5 rounded-lg text-xs transition-all ${compareSelectedPart === p.id ? 'bg-white/15 text-white border border-white/20' : 'bg-surface-800/40 text-surface-400'}`}>
+                className={`px-2 py-1.5 rounded-lg text-xs transition-all ${compareSelectedPart === p.id ? 'bg-surface-50/15 text-surface-50 border border-surface-50/20' : 'bg-surface-800/40 text-surface-400'}`}>
                 {p.nameZh}
               </button>
             ))}
@@ -43,7 +43,7 @@ export function ComparePanel() {
               <div className="flex flex-wrap gap-1">
                 {currentPart.availableVariants.map((v) => (
                   <button key={v.id} onClick={() => setComparePartVariant(compareSelectedPart, v.id)}
-                    className={`px-2 py-1 rounded text-[10px] ${currentPart.variant === v.id ? 'bg-white/15 text-white' : 'bg-surface-800/40 text-surface-400'}`}>
+                    className={`px-2 py-1 rounded text-[10px] ${currentPart.variant === v.id ? 'bg-surface-50/15 text-surface-50' : 'bg-surface-800/40 text-surface-400'}`}>
                     {v.nameZh}
                   </button>
                 ))}
@@ -65,7 +65,7 @@ export function ComparePanel() {
             <div className="flex gap-1">
               {(['matte','satin','glossy','metal'] as const).map((mt) => (
                 <button key={mt} onClick={() => setComparePartMaterial(compareSelectedPart, mt)}
-                  className={`px-2 py-1 rounded text-[10px] ${currentPart.material === mt ? 'bg-white/15 text-white' : 'bg-surface-800/40 text-surface-400'}`}>
+                  className={`px-2 py-1 rounded text-[10px] ${currentPart.material === mt ? 'bg-surface-50/15 text-surface-50' : 'bg-surface-800/40 text-surface-400'}`}>
                   {mt === 'matte' ? '哑光' : mt === 'satin' ? '半光' : mt === 'glossy' ? '亮光' : '金属'}
                 </button>
               ))}
@@ -74,7 +74,7 @@ export function ComparePanel() {
         </div>
       )}
       <div className="p-4 mt-auto border-t border-surface-700/30">
-        <button onClick={() => setCompareMode(false)} className="w-full py-2 text-sm text-surface-400 hover:text-white rounded-lg transition-colors">
+        <button onClick={() => setCompareMode(false)} className="w-full py-2 text-sm text-surface-400 hover:text-surface-50 rounded-lg transition-colors">
           退出对比
         </button>
       </div>
