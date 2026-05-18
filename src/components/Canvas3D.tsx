@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows, Html } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { ProductRenderer } from './ProductRenderer';
 import { useProductStore } from '../store/useProductStore';
@@ -70,6 +70,7 @@ export function Canvas3D({ isCompare = false }: Props) {
           <directionalLight position={[-3, 4, -2]} intensity={0.35} />
           <color attach="background" args={[bgColor]} />
           <ProductRenderer isCompare={isCompare} />
+          <PartTooltip />
           <ContactShadows position={[0, -0.75, 0]} opacity={0.45} scale={5} blur={2.5} far={1.5} />
           <CameraController />
           <OrbitControls enableDamping dampingFactor={0.08} minDistance={1.2} maxDistance={7}
@@ -151,4 +152,23 @@ function CameraController() {
   }, [camera, autoRotate, parts]);
 
   return null;
+}
+
+function PartTooltip() {
+  const [info, setInfo] = useState<{ name: string; x: number; y: number; z: number } | null>(null);
+  useEffect(() => {
+    const show = (e: Event) => setInfo((e as CustomEvent).detail);
+    const hide = () => setInfo(null);
+    window.addEventListener('part-hover', show);
+    window.addEventListener('part-hover-out', hide);
+    return () => { window.removeEventListener('part-hover', show); window.removeEventListener('part-hover-out', hide); };
+  }, []);
+  if (!info) return null;
+  return (
+    <Html position={[info.x, info.y + 0.15, info.z]} center style={{ pointerEvents: 'none' }}>
+      <div className="bg-surface-900/90 text-white text-[11px] px-2.5 py-1 rounded-lg border border-surface-700/50 whitespace-nowrap backdrop-blur-md">
+        {info.name}
+      </div>
+    </Html>
+  );
 }

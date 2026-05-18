@@ -2,8 +2,7 @@ import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
 
 interface Props { parts: PartConfig[]; selectedPart: string; selectPart: (id: string) => void; exploded?: boolean; wireframe?: boolean; showDimensions?: boolean; }
-const hi = () => { document.body.style.cursor = 'pointer'; };
-const ho = () => { document.body.style.cursor = 'auto'; };
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 export function Bench3D({ parts, selectedPart, selectPart, exploded = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -17,7 +16,7 @@ export function Bench3D({ parts, selectedPart, selectPart, exploded = false }: P
 
   return (<group position={[0, 0.05, 0]}>
     {/* SEAT */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('seat'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('seat'); }} onPointerOver={makeHoverIn('座面')} onPointerOut={makeHoverOut()}>
       {seatV === 'slatted' ? (<>
         {[-0.2, -0.1, 0, 0.1, 0.2].map((z, i) => (<RoundedBox key={i} args={[sw - 0.1, st, 0.06]} radius={0.01} position={[0, seatY, z]} castShadow><meshStandardMaterial {...m('seat')} {...sel('seat')} /></RoundedBox>))}
       </>) : (<RoundedBox args={[sw, st, sd]} radius={seatV === 'curved' ? 0.05 : 0.02} position={[0, seatY, 0]} castShadow receiveShadow><meshStandardMaterial {...m('seat')} {...sel('seat')} /></RoundedBox>)}
@@ -25,7 +24,7 @@ export function Bench3D({ parts, selectedPart, selectPart, exploded = false }: P
     </group>
 
     {/* LEGS */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={makeHoverIn('腿')} onPointerOut={makeHoverOut()}>
       {legV === 'a-frame' ? (<>
         {[-1, 1].map((side) => (<group key={side}>
           <mesh position={[side * (sw / 2 - 0.1) + (exploded ? side * exp : 0), 0.22, 0]} rotation={[0, 0, side * 0.12]} castShadow><boxGeometry args={[0.05, 0.42, 0.05]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>
@@ -41,7 +40,7 @@ export function Bench3D({ parts, selectedPart, selectPart, exploded = false }: P
     </group>
 
     {/* BACKREST */}
-    {backV !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('backrest'); }} onPointerOver={hi} onPointerOut={ho}>
+    {backV !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('backrest'); }} onPointerOver={makeHoverIn('靠背')} onPointerOut={makeHoverOut()}>
       <RoundedBox args={[sw - 0.1, backV === 'full' ? 0.4 : 0.15, 0.04]} radius={0.015} position={[0, seatY + (backV === 'full' ? 0.2 : 0.08), -sd / 2 + 0.02 + (exploded ? -exp : 0)]} castShadow><meshStandardMaterial {...m('backrest')} {...sel('backrest')} /></RoundedBox>
       {/* Support posts */}
       <mesh position={[sw / 2 - 0.15, seatY - 0.05, -sd / 2 + 0.02]} castShadow><cylinderGeometry args={[0.015, 0.015, seatY + 0.1, 8]} /><meshStandardMaterial {...m('backrest')} {...sel('backrest')} /></mesh>

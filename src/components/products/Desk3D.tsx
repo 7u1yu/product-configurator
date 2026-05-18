@@ -2,8 +2,7 @@ import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
 
 interface Props { parts: PartConfig[]; selectedPart: string; selectPart: (id: string) => void; exploded?: boolean; wireframe?: boolean; showDimensions?: boolean; }
-const hi = () => { document.body.style.cursor = 'pointer'; };
-const ho = () => { document.body.style.cursor = 'auto'; };
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 export function Desk3D({ parts, selectedPart, selectPart, exploded = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -18,13 +17,13 @@ export function Desk3D({ parts, selectedPart, selectPart, exploded = false }: Pr
 
   return (<group position={[0, -0.05, 0]}>
     {/* TOP */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('top'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('top'); }} onPointerOver={makeHoverIn('桌面')} onPointerOut={makeHoverOut()}>
       <RoundedBox args={[topV === 'compact' ? 1.0 : 1.4, 0.05, 0.65]} radius={0.02} position={[0, topH + exp, 0]} castShadow receiveShadow><meshStandardMaterial {...m('top')} {...sel('top')} /></RoundedBox>
       {isL && (<RoundedBox args={[0.8, 0.05, 0.65]} radius={0.02} position={[1.05, topH + exp, 0.35]} rotation={[0, Math.PI / 2, 0]} castShadow><meshStandardMaterial {...m('top')} {...sel('top')} /></RoundedBox>)}
     </group>
 
     {/* LEGS */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={makeHoverIn('腿')} onPointerOut={makeHoverOut()}>
       {legV === 'four-legs' && ([[0.55, 0.25], [-0.55, 0.25], [0.55, -0.25], [-0.55, -0.25]] as [number,number][]).map(([x, z], i) => (
         <mesh key={i} position={[x, (topH - 0.05) / 2, z]} castShadow receiveShadow><cylinderGeometry args={[0.03, 0.035, topH - 0.05, 16]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>
       ))}
@@ -42,7 +41,7 @@ export function Desk3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     </group>
 
     {/* STORAGE */}
-    {stV !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('storage'); }} onPointerOver={hi} onPointerOut={ho}>
+    {stV !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('storage'); }} onPointerOver={makeHoverIn('收纳')} onPointerOut={makeHoverOut()}>
       {(() => {
         const side = stV === 'left' ? -1 : 1;
         const sx = side * 0.55 + (exploded ? side * exp : 0);

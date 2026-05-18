@@ -1,5 +1,7 @@
 import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
+import { getWoodTexture, getBrushedMetalTexture, isWoodColor } from '../../utils/proceduralTextures';
+import { useMemo } from 'react';
 
 interface Props {
   parts: PartConfig[];
@@ -15,14 +17,18 @@ const hoverOut = () => { document.body.style.cursor = 'auto'; };
 
 export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wireframe = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
+  const textures = useMemo(() => ({ metal: getBrushedMetalTexture() }), []);
   const m = (id: string) => {
     const p = get(id);
     const isMetal = p?.material === 'metal';
-    return {
+    const mat: any = {
       color: p?.color || '#ccc',
       roughness: isMetal ? 0.3 : p?.material === 'glossy' ? 0.15 : p?.material === 'satin' ? 0.4 : 0.8,
       metalness: isMetal ? 0.9 : 0,
     };
+    if (isMetal) mat.map = textures.metal;
+    if (!isMetal && p?.material !== 'glossy' && isWoodColor(p?.color || '')) mat.map = getWoodTexture(p?.color || '#D4A76A');
+    return mat;
   };
   const sel = (id: string) => selectedPart === id ? { emissive: '#ffffff', emissiveIntensity: 0.12 } : {};
 

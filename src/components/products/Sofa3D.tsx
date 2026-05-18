@@ -2,8 +2,7 @@ import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
 
 interface Props { parts: PartConfig[]; selectedPart: string; selectPart: (id: string) => void; exploded?: boolean; wireframe?: boolean; showDimensions?: boolean; }
-const hi = () => { document.body.style.cursor = 'pointer'; };
-const ho = () => { document.body.style.cursor = 'auto'; };
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -25,7 +24,7 @@ export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Pr
 
   return (<group position={[0, 0.05, 0]}>
     {/* CUSHIONS */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('cushions'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('cushions'); }} onPointerOver={makeHoverIn('座垫')} onPointerOut={makeHoverOut()}>
       {/* Seat cushion */}
       <RoundedBox args={[sw, 0.12, sd]} radius={0.06} position={[0, seatY, 0]} castShadow><meshStandardMaterial {...m('cushions')} {...sel('cushions')} /></RoundedBox>
       {/* Back cushion */}
@@ -36,7 +35,7 @@ export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     </group>
 
     {/* FRAME */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('frame'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('frame'); }} onPointerOver={makeHoverIn('框架')} onPointerOut={makeHoverOut()}>
       <RoundedBox args={[sw + 0.08, 0.08, sd + 0.06]} radius={0.02} position={[0, seatY - 0.08, 0]} castShadow><meshStandardMaterial {...m('frame')} {...sel('frame')} /></RoundedBox>
       {/* Side panels */}
       <mesh position={[sw / 2 + 0.02, seatY + (isHigh ? 0.1 : -0.05), 0]} castShadow><boxGeometry args={[0.05, seatY + backH + 0.05, sd + 0.02]} /><meshStandardMaterial {...m('frame')} {...sel('frame')} /></mesh>
@@ -44,7 +43,7 @@ export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     </group>
 
     {/* LEGS */}
-    {lv !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={hi} onPointerOut={ho}>
+    {lv !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('legs'); }} onPointerOver={makeHoverIn('腿')} onPointerOut={makeHoverOut()}>
       {[[sw / 2 - 0.08, sd / 2 - 0.05], [-sw / 2 + 0.08, sd / 2 - 0.05], [sw / 2 - 0.08, -sd / 2 + 0.05], [-sw / 2 + 0.08, -sd / 2 + 0.05]].map((pos, i) => {
         const [x, z] = pos as number[];
         if (lv === 'block') return <mesh key={i} position={[x, 0.08, z]} castShadow receiveShadow><boxGeometry args={[0.06, 0.16, 0.06]} /><meshStandardMaterial {...m('legs')} {...sel('legs')} /></mesh>;
@@ -53,7 +52,7 @@ export function Sofa3D({ parts, selectedPart, selectPart, exploded = false }: Pr
     </group>)}
 
     {/* ARMRESTS */}
-    {av !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('armrests'); }} onPointerOver={hi} onPointerOut={ho}>
+    {av !== 'none' && (<group onClick={(e) => { e.stopPropagation(); selectPart('armrests'); }} onPointerOver={makeHoverIn('扶手')} onPointerOut={makeHoverOut()}>
       {[1, -1].map((side) => {
         const sx = side * (sw / 2 + (exploded ? 0.15 * side : 0));
         const aw = av === 'wide' ? 0.12 : 0.08;

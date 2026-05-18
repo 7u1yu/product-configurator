@@ -1,8 +1,7 @@
 import type { PartConfig } from '../../types';
 
 interface Props { parts: PartConfig[]; selectedPart: string; selectPart: (id: string) => void; exploded?: boolean; wireframe?: boolean; showDimensions?: boolean; }
-const hi = () => { document.body.style.cursor = 'pointer'; };
-const ho = () => { document.body.style.cursor = 'auto'; };
+import { makeHoverIn, makeHoverOut } from '../../utils/interaction';
 
 export function CoatRack3D({ parts, selectedPart, selectPart }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
@@ -16,7 +15,7 @@ export function CoatRack3D({ parts, selectedPart, selectPart }: Props) {
 
   return (<group position={[0, 0, 0]}>
     {/* POLE */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('pole'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('pole'); }} onPointerOver={makeHoverIn('立杆')} onPointerOut={makeHoverOut()}>
       {poleV === 'segmented' ? (<>
         {[0.4, 0.9, 1.4].map((y) => (<mesh key={y} position={[0, y, 0]} castShadow><cylinderGeometry args={[0.025, 0.025, 0.35, 16]} /><meshStandardMaterial {...m('pole')} {...sel('pole')} /></mesh>))}
         {[0.575, 1.075, 1.575].map((y) => (<mesh key={'j'+y} position={[0, y, 0]}><cylinderGeometry args={[0.03, 0.03, 0.03, 16]} /><meshStandardMaterial {...m('pole')} {...sel('pole')} roughness={0.25} metalness={0.85} /></mesh>))}
@@ -29,7 +28,7 @@ export function CoatRack3D({ parts, selectedPart, selectPart }: Props) {
     </group>
 
     {/* HOOKS */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('hooks'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('hooks'); }} onPointerOver={makeHoverIn('挂钩')} onPointerOut={makeHoverOut()}>
       {hookV === 'spiral' ? (<>
         {Array.from({ length: 8 }).map((_, i) => {
           const angle = (i / 8) * Math.PI * 2;
@@ -54,7 +53,7 @@ export function CoatRack3D({ parts, selectedPart, selectPart }: Props) {
     </group>
 
     {/* BASE */}
-    <group onClick={(e) => { e.stopPropagation(); selectPart('base'); }} onPointerOver={hi} onPointerOut={ho}>
+    <group onClick={(e) => { e.stopPropagation(); selectPart('base'); }} onPointerOver={makeHoverIn('底座')} onPointerOut={makeHoverOut()}>
       {baseV === 'round' && (<mesh position={[0, 0.03, 0]} castShadow receiveShadow><cylinderGeometry args={[0.25, 0.28, 0.05, 32]} /><meshStandardMaterial {...m('base')} {...sel('base')} /></mesh>)}
       {baseV === 'cross' && (<>
         <mesh position={[0, 0.03, 0]} castShadow><boxGeometry args={[0.55, 0.05, 0.06]} /><meshStandardMaterial {...m('base')} {...sel('base')} /></mesh>
