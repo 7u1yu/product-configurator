@@ -25,8 +25,8 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
   ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-  /* Smooth transitions */
-  *, *::before, *::after { transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease; }
+  /* Smooth transitions - only on interactive elements */
+  a, button, input, select, textarea, .interactive { transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease; }
   /* Focus ring */
   *:focus-visible { outline: 2px solid rgba(96, 165, 250, 0.5); outline-offset: 2px; border-radius: 4px; }
   /* Button tap feedback */

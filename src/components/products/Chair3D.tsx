@@ -1,7 +1,7 @@
 import { RoundedBox } from '@react-three/drei';
 import type { PartConfig } from '../../types';
 import { getWoodTexture, getBrushedMetalTexture, isWoodColor } from '../../utils/proceduralTextures';
-import { useMemo } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface Props {
   parts: PartConfig[];
@@ -17,7 +17,9 @@ const hoverOut = () => { document.body.style.cursor = 'auto'; };
 
 export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wireframe = false }: Props) {
   const get = (id: string) => parts.find((p) => p.id === id);
-  const textures = useMemo(() => ({ metal: getBrushedMetalTexture() }), []);
+  const texturesRef = useRef<{ metal?: any; wood: Record<string, any> }>({ wood: {} });
+  const [, setReady] = useState(false);
+  useEffect(() => { texturesRef.current.metal = getBrushedMetalTexture(); setReady(true); }, []);
   const m = (id: string) => {
     const p = get(id);
     const isMetal = p?.material === 'metal';
@@ -26,8 +28,12 @@ export function Chair3D({ parts, selectedPart, selectPart, exploded = false, wir
       roughness: isMetal ? 0.3 : p?.material === 'glossy' ? 0.15 : p?.material === 'satin' ? 0.4 : 0.8,
       metalness: isMetal ? 0.9 : 0,
     };
-    if (isMetal) mat.map = textures.metal;
-    if (!isMetal && p?.material !== 'glossy' && isWoodColor(p?.color || '')) mat.map = getWoodTexture(p?.color || '#D4A76A');
+    if (isMetal && texturesRef.current.metal) mat.map = texturesRef.current.metal;
+    if (!isMetal && p?.material !== 'glossy' && isWoodColor(p?.color || '')) {
+      const c = p?.color || '#D4A76A';
+      if (!texturesRef.current.wood[c]) texturesRef.current.wood[c] = getWoodTexture(c);
+      mat.map = texturesRef.current.wood[c];
+    }
     return mat;
   };
   const sel = (id: string) => selectedPart === id ? { emissive: '#ffffff', emissiveIntensity: 0.12 } : {};
