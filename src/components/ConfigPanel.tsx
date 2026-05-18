@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PartSelector } from './PartSelector';
 import { VariantSelector } from './VariantSelector';
 import { PresetCards } from './PresetCards';
@@ -20,6 +21,15 @@ const descriptions: Record<string, string> = {
   cabinet: '收纳柜，双门/单门/抽屉结构，平板或玻璃面板',
 };
 
+const designNotes: Record<string, string> = {
+  chair: '椅子是工业设计中最经典的产品类型。本配置器中的休闲椅从 Scandinavian 设计语言出发，座面采用圆角处理减少视觉重量，椅腿提供金属直腿、木质锥腿和滑雪板底座三种结构方案，靠背可选高面板、低面板或横条风格。',
+  table: '桌子的核心设计挑战在于桌面与底座的视觉平衡。圆形桌面搭配柱式底座呈现雕塑感，长方形桌面配合四腿结构强调功能主义，支架式底座则带有中古风格。桌面边缘的圆角处理让整体更亲和。',
+  bed: '床的设计重点在于床头板的比例与床架的呼吸感。高床头板营造稳重氛围，低板或无边设计则更现代。排骨架保留空气流通，平台式简洁利落，面板式带有传统木工细节。',
+  lamp: '台灯是 CMF 表现力最强的产品类型。灯罩形态决定光的氛围——锥形集中、圆顶柔散、方形现代。灯身材质与底座造型的搭配可以彻底改变一盏灯的风格，从工业风的弯管到极简柱体。',
+  shelf: '置物架是功能与结构美学的直接对话。层数决定收纳容量，支架系统定义视觉性格——纤细金属架轻盈通透，实木侧板温暖稳重，悬浮式隐藏支架则最大化极简效果。',
+  cabinet: '储物柜的 UX 在于「藏」与「露」的平衡。双门结构适合大容量收纳，抽屉式便于分类存取。柜门材质从实木平板到玻璃框再到开放式，决定了柜体与空间的关系。',
+};
+
 interface Props {
   onOpenSaved?: () => void;
 }
@@ -31,6 +41,7 @@ export function ConfigPanel({ onOpenSaved }: Props) {
   const switchProduct = useProductStore((s) => s.switchProduct);
   const resetAll = useProductStore((s) => s.resetAll);
   const randomize = useProductStore((s) => s.randomize);
+  const [showNotes, setShowNotes] = useState(false);
 
   const currentPart = parts.find((p) => p.id === selectedPart);
 
@@ -44,11 +55,29 @@ export function ConfigPanel({ onOpenSaved }: Props) {
       {/* Header */}
       <div className="p-5 border-b border-surface-700/30">
         <h2 className="text-lg font-display font-semibold text-white tracking-tight">
-          Product Configurator
+          {products[currentProduct].nameZh}
         </h2>
         <p className="text-xs text-surface-400 mt-0.5">
           {descriptions[currentProduct] || ''}
         </p>
+        <button
+          onClick={() => setShowNotes(!showNotes)}
+          className="mt-2 text-[10px] text-surface-500 hover:text-surface-300 transition-colors"
+        >
+          {showNotes ? '收起设计说明 ▲' : '设计说明 ▼'}
+        </button>
+        <AnimatePresence>
+          {showNotes && (
+            <motion.p
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="mt-2 text-[11px] text-surface-400 leading-relaxed overflow-hidden"
+            >
+              {designNotes[currentProduct] || ''}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Product Switcher */}

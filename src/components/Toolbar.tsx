@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useProductStore } from '../store/useProductStore';
 import { useToastStore } from '../store/toastStore';
+import { useThemeStore } from '../store/themeStore';
 import { encodeShareUrl } from '../utils/shareUrl';
 import { generateCmfCard } from '../utils/cmfCard';
 import { products } from '../data/products';
@@ -22,6 +23,8 @@ export function Toolbar() {
   const setCompareMode = useProductStore((s) => s.setCompareMode);
   const randomize = useProductStore((s) => s.randomize);
   const addToast = useToastStore((s) => s.add);
+  const theme = useThemeStore((s) => s.theme);
+  const toggleTheme = useThemeStore((s) => s.toggle);
 
   const btn = (active: boolean) =>
     `${btnBase} ${active ? 'bg-white/10 border-white/20 text-white' : 'bg-surface-900/60 border-surface-700/40 text-surface-400 hover:text-white hover:border-surface-600/50'}`;
@@ -85,6 +88,12 @@ export function Toolbar() {
       </Tooltip>
       <Tooltip label="随机灵感">
         <button onClick={handleRandom} className={btn(false)}>🎲</button>
+      </Tooltip>
+      <span className="w-px h-5 bg-surface-700/50 mx-1" />
+      <Tooltip label={theme === 'dark' ? '亮色模式' : '暗色模式'}>
+        <button onClick={toggleTheme} className={btn(false)}>
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
       </Tooltip>
     </div>
   );

@@ -10,8 +10,8 @@ interface Props {
 
 export function SavedConfigsModal({ open, onClose }: Props) {
   const [configs, setConfigs] = useState<SavedConfig[]>([]);
-  const loadConfig = useProductStore((s) => (s as any).loadConfig);
-  const saveConfig = useProductStore((s) => (s as any).saveConfig);
+  const loadConfig = useProductStore((s) => s.loadConfig);
+  const saveConfig = useProductStore((s) => s.saveConfig);
   const [name, setName] = useState('');
 
   useEffect(() => {

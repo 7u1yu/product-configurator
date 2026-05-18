@@ -1,10 +1,11 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import { ProductRenderer } from './ProductRenderer';
 import { useProductStore } from '../store/useProductStore';
 import { Toolbar } from './Toolbar';
+import { hasWebGL } from '../utils/webgl';
 
 const envPresets: Record<string, 'studio' | 'apartment' | 'sunset'> = {
   studio: 'studio', showroom: 'apartment', outdoor: 'sunset',
@@ -32,6 +33,21 @@ export function Canvas3D({ isCompare = false }: Props) {
   const environment = useProductStore((s) => s.environment);
   const autoRotate = useProductStore((s) => s.autoRotate);
   const currentProduct = useProductStore((s) => s.currentProduct);
+  const [webglOk] = useState(hasWebGL);
+
+  if (!webglOk) {
+    return (
+      <div className="flex items-center justify-center h-full min-h-0 flex-1 bg-surface-950">
+        <div className="text-center p-8">
+          <p className="text-4xl mb-4">⚠️</p>
+          <h3 className="text-white font-semibold mb-2">WebGL 不可用</h3>
+          <p className="text-surface-400 text-sm max-w-md">
+            您的浏览器或设备不支持 WebGL。请使用最新版 Chrome、Edge 或 Safari 打开。
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative h-full min-h-0 flex-1">

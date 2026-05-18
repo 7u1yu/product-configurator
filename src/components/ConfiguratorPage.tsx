@@ -5,8 +5,9 @@ import { ComparePanel } from './ComparePanel';
 import { SavedConfigsModal } from './SavedConfigsModal';
 import { useProductStore } from '../store/useProductStore';
 import { decodeShareUrl } from '../utils/shareUrl';
+import type { MaterialType } from '../types';
 
-export function ConfiguratorPage() {
+export default function ConfiguratorPage() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [savedOpen, setSavedOpen] = useState(false);
   const compareMode = useProductStore((s) => s.compareMode);
@@ -21,7 +22,7 @@ export function ConfiguratorPage() {
       const store = useProductStore.getState();
       state.parts.forEach((sp) => {
         store.setPartColor(sp.id, sp.c);
-        store.setPartMaterial(sp.id, sp.m as any);
+        store.setPartMaterial(sp.id, sp.m as MaterialType);
         store.setPartVariant(sp.id, sp.v);
       });
       history.replaceState(null, '', window.location.pathname);
